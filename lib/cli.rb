@@ -1,3 +1,4 @@
+
 class Cli
     def welcome
         puts "Welcome to Herbwarts!"
@@ -7,6 +8,7 @@ class Cli
     def prompt_for_input
         puts "Please enter the name of the herb you wish to research!"
         input = gets.strip
+        Scraper.scrape_url
     end
 end  
 
