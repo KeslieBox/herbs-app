@@ -6,9 +6,12 @@ class Cli
     end
 
     def prompt_for_input
+        Scraper.scrape_url
         puts "Please enter the name of the herb you wish to research!"
         input = gets.strip
-        Scraper.scrape_url
+   
+        Herb.find_by_name(input)
+      
     end
 end  
 
