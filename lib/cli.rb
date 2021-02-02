@@ -4,4 +4,9 @@ class Cli
         self.prompt_for_input
     end
 
-end
+    def prompt_for_input
+        puts "Please enter the name of the herb you wish to research!"
+        input = gets.strip
+    end
+end  
+
