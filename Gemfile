@@ -9,3 +9,6 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gem 'pry'
 gem 'nokogiri'
 gem 'open-uri'
+gem 'colorize'
+gem 'tty-font'
+gem 'tty-spinner'
