@@ -52,10 +52,6 @@ class Cli
         end 
     end
 
-    
-
-    
-    
     def main_menu
         puts "\nYAY, YOU'VE LEARNED SO MUCH ALREADY! WHAT WOULD YOU LIKE TO DO NEXT?"
         puts "\n1. To see our LIST OF HERBS, please enter 1"
