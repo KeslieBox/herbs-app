@@ -10,7 +10,7 @@ class Herb
     end
 
     def self.all
-        @@all
+        @@all 
     end
 
     def self.find_by_name(input)

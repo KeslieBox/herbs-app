@@ -17,12 +17,20 @@ class Cli
         end
         self.prompt_for_input
     end
-    
+
     def prompt_for_input
         puts "\n\nTO SEE AN HERB PROFILE, TYPE THE NAME OF AN HERB FROM THE LIST AND PRESS \"ENTER\"" 
         input = gets.strip
         user_input(input)
     end
+
+    def return_plant_info(object)
+        Scraper.scrape_herb_page(object)
+        puts "\n#{"Plant Name:".upcase.blue} #{object.name}"
+        puts "\n#{"Plant Family:".upcase.blue} #{object.plant_family}"
+        puts "\n#{"Key Constituents:".upcase.blue} #{object.constituents}"
+        puts "\n#{"Key Actions:".upcase.blue} #{object.actions}\n"
+    end  
 
     def user_input(input)
 
@@ -43,5 +51,33 @@ class Cli
             self.user_input(new_input)
         end 
     end
+
+    
+
+    
+    
+    def main_menu
+        puts "\nYAY, YOU'VE LEARNED SO MUCH ALREADY! WHAT WOULD YOU LIKE TO DO NEXT?"
+        puts "\n1. To see our LIST OF HERBS, please enter 1"
+        puts "2. To search for another HERB PROFILE, please press 2"
+        puts "3. To EXIT the program, please press 3\n\n"
+        input = gets.strip
+        if input == "1"
+            self.herb_selection
+        elsif input == "2"
+            self.prompt_for_input
+        elsif input == "3"
+            self.exit_program
+        else 
+            puts "INVALID SELECTION"
+            self.main_menu
+        end
+    end
+    
+    def exit_program
+        abort("THANKS FOR COMING TO HERBWARTS, COME BACK AND VISIT SOON!")
+    end
+end
+    
 
     
