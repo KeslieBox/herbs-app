@@ -1,17 +1,17 @@
 
 class Cli
     def welcome
-        puts "\n\n                  *********************************************************************************************************************"
+        puts "\n\n                       *********************************************************************************************************************"
         puts "\n"
-        puts "                                                      🌿🧙‍♀️ ‍#{"HELLO & WELCOME TO HERBWARTS".green} 🧙‍🌿"
+        puts "                                                           🌿🧙‍♀️ ‍#{"HELLO & WELCOME TO HERBWARTS!!!".green} 🧙‍🌿"
         puts "\n"                                                                            
-        puts "                  **********************************************************************************************************************"
+        puts "                       **********************************************************************************************************************"
         self.herb_selection
     end
 
     def herb_selection
         Scraper.scrape_url
-        puts "\n                                                   🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE 🌿\n\n"
+        puts "\n                                                          🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE 🌿\n\n"
 
         herbs_array = Herb.all.each_with_index.map {|object, index| "#{index+1}. #{object.name.upcase.green}"}
 
@@ -35,37 +35,33 @@ class Cli
 
     def return_plant_info(object)
         Scraper.scrape_herb_page(object)
-        puts "\n#{"Plant Name:".upcase.blue} #{object.name}"
-        puts "\n#{"Plant Family:".upcase.blue} #{object.plant_family}"
-        puts "\n#{"Key Constituents:".upcase.blue} #{object.constituents}"
-        puts "\n#{"Key Actions:".upcase.blue} #{object.actions}\n"
+        puts "\n#{"Plant Name:".upcase.green} #{object.name.capitalize}"
+        puts "\n#{"Plant Family:".upcase.green} #{object.plant_family}"
+        puts "\n#{"Key Constituents:".upcase.green} #{object.constituents}"
+        puts "\n#{"Key Actions:".upcase.green} #{object.actions}\n"
     end  
 
     def user_input(input)
-
-        # try to make this into while loop??
-        object = Herb.find_by_name(input)
-        if Herb.find_by_name(input) 
+        while Herb.find_by_name(input) == nil && input != "1" && input != "2"
+            puts "\nTHAT SELECTION WAS INVALID. \nPLEASE ENTER THE NAME OF AN HERB, ENTER 1 TO SEE THE MAIN MENU OR ENTER 2 TO EXIT THE PROGRAM.\n"
+            input = gets.strip
+        end
+        if input == "1"
+            self.main_menu
+        elsif input == "2"
+            self.exit_program
+        elsif Herb.find_by_name(input)
+            object = Herb.find_by_name(input)
             return_plant_info(object) 
             self.main_menu
-        else 
-            puts "\nTHAT SELECTION WAS INVALID. \nPLEASE ENTER THE NAME OF AN HERB, ENTER 1 TO SEE THE MAIN MENU OR ENTER 2 TO EXIT THE PROGRAM.\n"
-        end
-        new_input = gets.strip
-        if new_input == "1"
-            self.main_menu
-        elsif new_input == "2"
-            self.exit_program
-        else 
-            self.user_input(new_input)
         end 
     end
 
     def main_menu
-        puts "\nYAY, YOU'VE LEARNED SO MUCH ALREADY! WHAT WOULD YOU LIKE TO DO NEXT?"
-        puts "\n1. To see our LIST OF HERBS, please enter 1"
-        puts "2. To search for another HERB PROFILE, please press 2"
-        puts "3. To EXIT the program, please press 3\n\n"
+        puts "\n\nYAY, YOU'VE LEARNED SO MUCH ALREADY! WHAT WOULD YOU LIKE TO DO NEXT?"
+        puts "\n1. To see our LIST OF HERBS, please enter 1".green
+        puts "2. To search for another HERB PROFILE, please press 2".green
+        puts "3. To EXIT the program, please press 3\n\n".green
         input = gets.strip
         if input == "1"
             self.herb_selection
