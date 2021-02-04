@@ -1,20 +1,29 @@
 
 class Cli
     def welcome
-        puts "**************************************"
-        puts "                                      "
-        puts "🌿🧙‍♀️ ‍HELLO & WELCOME TO HERBWARTS 🧙‍🌿"
-        puts "                                      "
-        puts "**************************************"
+        puts "\n\n                  *********************************************************************************************************************"
+        puts "\n"
+        puts "                                                      🌿🧙‍♀️ ‍#{"HELLO & WELCOME TO HERBWARTS".green} 🧙‍🌿"
+        puts "\n"                                                                            
+        puts "                  **********************************************************************************************************************"
         self.herb_selection
     end
 
     def herb_selection
         Scraper.scrape_url
-        puts "HERE IS A LIST OF ALL THE HERBS WE HAVE:\n\n"
-        Herb.all.each.with_index do |info, index| 
-            print "#{info.name.upcase.blue} "  
+        puts "\n                                                   🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE 🌿\n\n"
+
+        herbs_array = Herb.all.each_with_index.map {|object, index| "#{index+1}. #{object.name.upcase.green}"}
+
+        rows = []
+        i = 0
+        while i <= 236
+            rows << herbs_array[i..i + 5]
+            i+=6
         end
+        table = Terminal::Table.new :rows => rows, :style => {:width => 170}
+        puts table
+
         self.prompt_for_input
     end
 
@@ -71,7 +80,7 @@ class Cli
     end
     
     def exit_program
-        abort("THANKS FOR COMING TO HERBWARTS, COME BACK AND VISIT SOON!")
+        abort("THANKS FOR COMING TO HERBWARTS, COME BACK AGAIN SOON!")
     end
 end
     
