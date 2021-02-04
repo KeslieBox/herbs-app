@@ -13,15 +13,17 @@ class Cli
         Scraper.scrape_url
         puts "\n                                                          🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE 🌿\n\n"
 
-        herbs_array = Herb.all.each_with_index.map {|object, index| "#{index+1}. #{object.name.upcase.green}"}
+        herbs_array = Herb.sort_by_name.map {|name| name.upcase.green}
+        
+    
 
         rows = []
         i = 0
-        while i <= 236
-            rows << herbs_array[i..i + 5]
-            i+=6
+        while i <= 15
+            rows << herbs_array[i..i + 2]
+            i+=3
         end
-        table = Terminal::Table.new :rows => rows, :style => {:width => 170}
+        table = Terminal::Table.new :rows => rows, :style => {:width => 150}
         puts table
 
         self.prompt_for_input
@@ -51,15 +53,19 @@ class Cli
 
     def return_plant_info(object)
         Scraper.scrape_herb_page(object)
-        puts "\n#{"Plant Name:".upcase.green} #{object.name.capitalize}"
-        puts "\n#{"Plant Family:".upcase.green} #{object.plant_family}"
+        puts "\n#{"PLANT NAME:".green} #{object.name.capitalize}"
+        puts "\n#{"PLANT FAMILY:".green} #{object.plant_family}"
+        puts "\n#{"LATIN NAME:".green} #{object.latin_name}"
         if object.constituents != nil
-            puts "\n#{"Key Constituents:".upcase.green} #{object.constituents}"
+            puts "\n#{"KEY CONSTITUENTS:".green} #{object.constituents}"
         end
-        puts "\n#{"Key Actions:".upcase.green} #{object.actions}\n"
-        if object.med_parts != nil
-            puts "\n#{"Medicinal Parts:".upcase.green} #{object.med_parts}\n"
-        end
+        # if object.actions != nil
+            puts "\n#{"ACTIONS:".green} #{object.actions}"
+        # end
+        # puts "\n#{"ENERGETICS:".green} #{object.energetics}\n"
+        # if object.med_parts != nil
+        #     puts "\n#{"Medicinal Parts:".upcase.green} #{object.med_parts}\n"
+        # end
     end 
 
     def main_menu
