@@ -6,10 +6,10 @@ class Cli
         puts "                                                           🌿🧙‍♀️ ‍#{"HELLO & WELCOME TO HERBWARTS!!!".green} 🧙‍🌿"
         puts "\n"                                                                            
         puts "                       **********************************************************************************************************************"
-        self.herb_selection
+        self.herb_library
     end
 
-    def herb_selection
+    def herb_library
         Scraper.scrape_url
         puts "\n                                                          🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE 🌿\n\n"
 
@@ -30,16 +30,8 @@ class Cli
     def prompt_for_input
         puts "\n\nTO SEE AN HERB PROFILE, TYPE THE NAME OF AN HERB FROM THE LIST AND PRESS \"ENTER\"" 
         input = gets.strip
-        user_input(input)
-    end
-
-    def return_plant_info(object)
-        Scraper.scrape_herb_page(object)
-        puts "\n#{"Plant Name:".upcase.green} #{object.name.capitalize}"
-        puts "\n#{"Plant Family:".upcase.green} #{object.plant_family}"
-        puts "\n#{"Key Constituents:".upcase.green} #{object.constituents}"
-        puts "\n#{"Key Actions:".upcase.green} #{object.actions}\n"
-    end  
+        user_input(input.downcase)
+    end 
 
     def user_input(input)
         while Herb.find_by_name(input) == nil && input != "1" && input != "2"
@@ -57,6 +49,15 @@ class Cli
         end 
     end
 
+    def return_plant_info(object)
+        Scraper.scrape_herb_page(object)
+        puts "\n#{"Plant Name:".upcase.green} #{object.name.capitalize}"
+        puts "\n#{"Plant Family:".upcase.green} #{object.plant_family}"
+        puts "\n#{"Key Constituents:".upcase.green} #{object.constituents}"
+        puts "\n#{"Key Actions:".upcase.green} #{object.actions}\n"
+        puts "\n#{"Description:".upcase.green} #{object.description}\n"
+    end 
+
     def main_menu
         puts "\n\nYAY, YOU'VE LEARNED SO MUCH ALREADY! WHAT WOULD YOU LIKE TO DO NEXT?"
         puts "\n1. To see our LIST OF HERBS, please enter 1".green
@@ -64,7 +65,7 @@ class Cli
         puts "3. To EXIT the program, please press 3\n\n".green
         input = gets.strip
         if input == "1"
-            self.herb_selection
+            self.herb_library
         elsif input == "2"
             self.prompt_for_input
         elsif input == "3"
