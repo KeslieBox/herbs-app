@@ -1,5 +1,5 @@
 class Herb
-    attr_accessor :name, :website, :plant_family, :actions, :constituents, :description
+    attr_accessor :name, :website, :plant_family, :actions, :constituents, :med_parts
 
     @@all = []
 

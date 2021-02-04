@@ -53,16 +53,20 @@ class Cli
         Scraper.scrape_herb_page(object)
         puts "\n#{"Plant Name:".upcase.green} #{object.name.capitalize}"
         puts "\n#{"Plant Family:".upcase.green} #{object.plant_family}"
-        puts "\n#{"Key Constituents:".upcase.green} #{object.constituents}"
+        if object.constituents != nil
+            puts "\n#{"Key Constituents:".upcase.green} #{object.constituents}"
+        end
         puts "\n#{"Key Actions:".upcase.green} #{object.actions}\n"
-        puts "\n#{"Description:".upcase.green} #{object.description}\n"
+        if object.med_parts != nil
+            puts "\n#{"Medicinal Parts:".upcase.green} #{object.med_parts}\n"
+        end
     end 
 
     def main_menu
         puts "\n\nYAY, YOU'VE LEARNED SO MUCH ALREADY! WHAT WOULD YOU LIKE TO DO NEXT?"
-        puts "\n1. To see our LIST OF HERBS, please enter 1".green
-        puts "2. To search for another HERB PROFILE, please press 2".green
-        puts "3. To EXIT the program, please press 3\n\n".green
+        puts "\n1. #{"For the LIST OF HERBS, enter 1".green}"
+        puts "2. #{"To research another HERB PROFILE, enter 2".green}"
+        puts "3. #{"To EXIT the program, enter 3".green}\n\n"
         input = gets.strip
         if input == "1"
             self.herb_library

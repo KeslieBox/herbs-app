@@ -4,7 +4,6 @@ class Scraper
     def self.scrape_url
         url = "https://www.cloverleaffarmherbs.com/" 
         index_page = Nokogiri::HTML(open(url))
-        herbs = []
         index_page.css("ul li strong a").each do |website_element| 
             Herb.new(website_element.text.downcase, website_element.attribute("href").text)
         end 
@@ -23,12 +22,8 @@ class Scraper
             if info.text.include?("Components")
                 object.constituents = herb_page.css("div.entry-content ul")[3].children.collect {|constituent| constituent.text}.join(", ")
             end   
-            if  info.text.include?("Description")
-                object.description = herb_page.css("div.entry-content ul")[4].children.collect do |description| 
-                    description.text
-                    binding.pry
-
-                end.join(", ")
+            if  info.text.include?("<Medicinal")
+                object.description = herb_page.css("div.entry-content ul")[4].children.collect {|med_parts| med_parts.text}.join(", ")
             end
         end 
     end  
