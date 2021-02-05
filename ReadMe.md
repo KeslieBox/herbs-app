@@ -33,6 +33,8 @@ This project is licensed under the CC0 1.0 Universal Creative Commons License - 
 
 Thanks to Kaylea Box & Annabel Wilmerding for your guidance and support!
 
+Thanks to https://solidarityapothecary.org for your lovely reference library and for the work you do!
+
 
 
 

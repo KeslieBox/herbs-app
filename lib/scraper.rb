@@ -19,33 +19,49 @@ class Scraper
 
     def self.scrape_herb_page(object)   
         herb_page = Nokogiri::HTML(open(object.website)) 
-        # div_entry =  herb_page.css("div.entry-content ul li")
         herb_page.css("div.post-entry p").each do |info|
-            # binding.pry
-
-            if info.text.include?("Plant family") 
-                # object.plant_family = herb_page.css("div.post-entry p")[2].text.gsub("Plant family: ", "")  
-                object.plant_family = info.text.gsub("Plant family: ", "").gsub(":", "")
+            if info.text.include?("Plant family:") 
+                object.plant_family = info.text.gsub("Plant family: ", "")
+            elsif info.text.include?("Plant family") 
+                object.plant_family = info.text.gsub("Plant family ", "")
             end
-            if info.text.include?("Latin name")
-                object.latin_name = info.text.gsub("Latin name", "").gsub(":", "")
+            if info.text.include?("Latin name:")
+                object.latin_name = info.text.gsub("Latin name: ", "")
+            elsif info.text.include?("Latin name")
+                object.latin_name = info.text.gsub("Latin name ", "")
             end
-            if info.text.include?("Chemical constituents") && herb_page.css("div.post-entry ul li")[0].text
-                object.constituents = info.text.gsub("Chemical constituents: ", "").gsub(":", "")
-            # need to test for when constituents has an extra level ie chickweed
-            # else
-            #   object.constituents = herb_page.css("div.post-entry ul li")[0].text
+            if info.text.include?("Chemical constituents:") 
+                object.constituents = info.text.gsub("Chemical constituents: ", "")
             elsif info.text.include?("Chemical constituents") 
-                object.constituents = info.text.gsub("Chemical constituents: ", "").gsub(":", "")
+                object.constituents = info.text.gsub("Chemical constituents ", "")    
             end 
-            if  info.text.include?("Herbal actions")
-                object.actions = info.text.gsub("Herbal actions: ", "").gsub(":", "")
+            if info.text.include?("Herbal actions:")
+                object.actions = info.text.gsub("Herbal actions: ", "")
+            elsif info.text.include?("Herbal actions")
+                object.actions = info.text.gsub("Herbal actions ", "")
             end
-            # if info.text.include?("Energetics")
-            #     object.energetics = herb_page.css("div.post-entry ul").text
-            # end
+        end
 
-        end 
+        # herb_page.css("div.post-entry").each do |title|
+            # binding.pry
+        # title = herb_page.css("div.post-entry p").text
+        #     if  title.include?("Chemical constituents")
+        #         object.constituents = herb_page.css("div.post-entry ul li").text
+        #     else
+        #         object.constituents = "None listed" 
+        #     end
+        #     if  title.include?("Herbal actions")
+        #         object.actions = herb_page.css("div.post-entry ul li").text
+        #     else
+        #         object.actions = "None listed"
+        #     end
+        # end
+
+        # if herb_page.css("div.post-entry h3").text.include?("Energetics")
+        #     object.energetics = herb_page.css("div.post-entry ul").text
+        # else
+        #     "None listed"
+        # end
         
         # herb_page.css("div.entry-content").each do |info|
         #     # binding.pry

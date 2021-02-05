@@ -14,14 +14,10 @@ class Herb
     end
 
     def self.sort_by_name
-        sorted = self.all.collect do |herb| 
-            herb.name  
-        end.sort
+        self.all.collect {|herb| herb.name}.sort
     end 
 
     def self.find_by_name(input)
-        self.all.detect do |herb|
-            input == herb.name
-        end
+        self.all.detect {|herb| herb.name.include?(input)}
     end
 end

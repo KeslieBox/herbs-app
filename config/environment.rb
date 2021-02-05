@@ -3,8 +3,6 @@ require 'nokogiri'
 require 'pry'
 require 'open-uri'
 require 'colorize'
-require 'tty-spinner'
-require 'tty-font'
 require 'terminal-table'
 
 
