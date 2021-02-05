@@ -1,17 +1,17 @@
 
 class Cli
     def welcome
-        puts "\n\n                       *********************************************************************************************************************"
+        puts "\n\n      *********************************************************************************************************"
         puts "\n"
-        puts "                                                           🌿🧙‍♀️ ‍#{"HELLO & WELCOME TO HERBWARTS!!!".green} 🧙‍🌿"
+        puts "                                    🌿🧙‍♀️ ‍#{"HELLO & WELCOME TO HERBWARTS!!!".green} 🧙‍🌿"
         puts "\n"                                                                            
-        puts "                       **********************************************************************************************************************"
+        puts "      *********************************************************************************************************"
         self.herb_library
     end
 
     def herb_library
         Scraper.scrape_url
-        puts "\n                                                          🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE 🌿\n\n"
+        puts "\n                                   🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE 🌿\n\n"
 
         herbs_array = Herb.sort_by_name.map {|name| name.upcase.green}
         
@@ -20,10 +20,10 @@ class Cli
         rows = []
         i = 0
         while i <= 15
-            rows << herbs_array[i..i + 2]
-            i+=3
+            rows << herbs_array[i..i + 5]
+            i+=6
         end
-        table = Terminal::Table.new :rows => rows, :style => {:width => 150}
+        table = Terminal::Table.new :rows => rows, :style => {:width => 120}
         puts table
 
         self.prompt_for_input

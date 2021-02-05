@@ -25,23 +25,26 @@ class Scraper
 
             if info.text.include?("Plant family") 
                 # object.plant_family = herb_page.css("div.post-entry p")[2].text.gsub("Plant family: ", "")  
-                object.plant_family = info.text.gsub("Plant family: ", "")
+                object.plant_family = info.text.gsub("Plant family: ", "").gsub(":", "")
             end
             if info.text.include?("Latin name")
-                object.latin_name = info.text.gsub("Latin name: ", "")
+                object.latin_name = info.text.gsub("Latin name", "").gsub(":", "")
             end
-            if info.text.include?("Chemical constituents") 
-                object.constituents = info.text.gsub("Chemical constituents: ", "")
+            if info.text.include?("Chemical constituents") && herb_page.css("div.post-entry ul li")[0].text
+                object.constituents = info.text.gsub("Chemical constituents: ", "").gsub(":", "")
             # need to test for when constituents has an extra level ie chickweed
             # else
             #   object.constituents = herb_page.css("div.post-entry ul li")[0].text
+            elsif info.text.include?("Chemical constituents") 
+                object.constituents = info.text.gsub("Chemical constituents: ", "").gsub(":", "")
             end 
             if  info.text.include?("Herbal actions")
-                object.actions = info.text.gsub("Herbal actions: ", "")
+                object.actions = info.text.gsub("Herbal actions: ", "").gsub(":", "")
             end
             # if info.text.include?("Energetics")
             #     object.energetics = herb_page.css("div.post-entry ul").text
             # end
+
         end 
         
         # herb_page.css("div.entry-content").each do |info|
