@@ -1,6 +1,7 @@
 
 class Cli
     def welcome
+        Scraper.scrape_url
         puts "\n\nHELLO! WHAT IS YOUR NAME, STUDIOUS NEW FRIEND?".green
         input = gets.strip
         puts "\n      *********************************************************************************************************"
@@ -12,24 +13,23 @@ class Cli
         puts "                           Thanks so much for visiting our virtual herbal encyclopedia!".green
         puts "                 This application will allow you to see a list of all the herbs in our repertoire,".green
         puts "                           as well as enter the name of an herb you wish to research.".green
-        puts "                  It will then return all of the information we have available for your selection".green
+        puts "                  It will then return all of the information we have available for your selection.".green
         puts "                                        Why don't you give it a try below!".green
         puts ""
         puts "       *********************************************************************************************************"
         self.herb_library
     end
-
+    
     def herb_library
-        Scraper.scrape_url
         puts "\n                        🌿 HERE IS A LIST OF #{"ALL THE HERBS".green} WE HAVE IN OUR LIBRARY 🌿\n\n"
-
-        herbs_array = Herb.sort_by_name.map {|name| name.upcase.green}
+      
         rows = []
+        herbs_array = Herb.all.map {|herb| herb.name.upcase.green}.sort
         i = 0
-        while i <= 15
-            rows << herbs_array[i..i + 5]
-            i+=6
-        end
+        while i <= 17
+             rows << herbs_array[i..i + 5]   
+        i+=6
+        end      
         table = Terminal::Table.new :rows => rows, :style => {:width => 120}
         puts table
 
@@ -37,9 +37,9 @@ class Cli
     end
 
     def prompt_for_input
-        puts "\nOOOOOOOOHHHH AAAAAAAHHH, THAT'S VERY EXCITING ISN'T IT? DON'T YOU WANT TO SEE MORE?!".green
+        puts "\nOOOOOOOOHHHH AAAAAAAHHH, SO MANY BEAUTIFUL HERBS, THAT'S VERY EXCITING ISN'T IT? DON'T YOU WANT TO LEARN ABOUT THEM?!".green
         puts "\nTO SEE AN HERB PROFILE, TYPE THE NAME OF AN HERB FROM THE LIST AND PRESS \"ENTER\" OR TYPE 2 TO EXIT THE PROGRAM".green 
-        puts "**NOTE: YOU DON'T HAVE TO TYPE IN THE WHOLE NAME ;)".green
+        puts "**NOTE: YOU DON'T HAVE TO TYPE IN THE WHOLE NAME 😉".green
         input = gets.strip
         user_input(input.downcase)
     end 
@@ -90,7 +90,7 @@ class Cli
         elsif input == "3"
             self.exit_program
         else 
-            puts "OOPS THAT WAS INVALID SELECTION"
+            puts "OOPS THAT WAS AN INVALID SELECTION"
             self.main_menu
         end
     end
